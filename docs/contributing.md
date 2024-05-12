@@ -11,7 +11,7 @@ To contribute to Sol, please follow these guidelines:
 2. **Clone the Repository**: Clone your forked repository to your local machine using the following command:
 
 ```nix
-git clone https://BedrockFrontiers/sol.git
+git clone https://github.com/BedrockFrontiers/sol.git
 ```
 
 3. **Create a Branch**: Before making any changes, create a new branch to work on your contribution:
