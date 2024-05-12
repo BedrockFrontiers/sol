@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/BedrockFrontiers/sol/blob/main/assets/sol-logo.png" alt="Sol Programming Language" height="250" width="250" />
+  <img src="https://github.com/BedrockFrontiers/sol/blob/main/assets/logo/logo-large.png" alt="Sol Programming Language" />
 </div>
 
 # Sol Programming Language
