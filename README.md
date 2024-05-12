@@ -12,6 +12,10 @@ Sol is a programming language focused exclusively on automation, designed to sim
 
 - **Integration Support:** Sol is compatible with a variety of platforms and services, allowing easy integration with other tools and systems.
 
+## Contributing
+
+If you're interested in contributing to the development of the Sol language, feel free to open an issue or submit a pull request. All contributions are welcome!
+
 ## License
 
-This project is licensed under the [Apache License 2.0]().
+This project is licensed under the [Apache License 2.0](https://github.com/BedrockFrontiers/sol/blob/main/LICENSE).
