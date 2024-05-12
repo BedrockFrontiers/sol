@@ -22,3 +22,7 @@ Developers can run the tests using a testing framework or tool compatible with t
 #### Contribution:
 
 Contributors are encouraged to expand the test suite by adding new test cases to cover additional language features, edge cases, and error scenarios. Consistent and comprehensive testing helps maintain the quality and stability of the Sol language implementation. But first, read the [Contributing Guide](../docs/contributing.md)
+
+#### License
+
+Tests in Sol language repository are open-source software licensed under the [Apache License 2.0](../LICENSE). Feel free to use, modify, and distribute these tests for your own projects.
