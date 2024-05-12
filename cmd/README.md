@@ -15,7 +15,7 @@ Each subdirectory within `cmd/` contains a specific command line tool for a part
 
 If you're interested in contributing to the development of command line tools for the Sol language, you can help by improving existing tools, adding new features, and fixing bugs. Contributions can include code contributions, documentation improvements, and more.
 
-Please refer to the [Contributing Guide](../../docs/contributing.md) for more detailed instructions on how to contribute to the Sol language project.
+Please refer to the [Contributing Guide](../docs/contributing.md) for more detailed instructions on how to contribute to the Sol language project.
 
 ## License
 
