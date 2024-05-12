@@ -52,7 +52,7 @@ Sol provides `for` and `while` loops for iterative execution.
 
 Example:
 
-```lua
+```haxe
 for (i = 0; i < 10; i++) do
   // code to execute in each iteration
 end
