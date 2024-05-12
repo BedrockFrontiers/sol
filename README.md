@@ -34,6 +34,11 @@ By familiarizing yourself with our contributing guidelines, you'll ensure that y
 
 Whether you're a seasoned developer or new to open source, we value your input and welcome contributions from individuals of all backgrounds and skill levels. Together, we can make Sol an even better language for automation.
 
+## Trademarks
+
+The Threadmarks feature is a trademark owned by Bedrock Frontiers. All rights reserved.
+If you wish to use the Threadmarks name or logo, please refer to our [Trademark Guide](./docs/trademark.md).
+
 ## License
 
 This project is licensed under the [Apache License 2.0](./LICENSE).
