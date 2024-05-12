@@ -1,8 +1,15 @@
 <div align="center">
-  <img src="https://github.com/BedrockFrontiers/sol/blob/main/assets/logo/logo-large.png" alt="Sol Programming Language" />
+  <img src="https://github.com/BedrockFrontiers/sol/blob/main/assets/logo/logo-large.png" height="100" alt="Sol Programming Language" />
+
+  ### The Sol Programming Language
+  
+  [![bedrock-originals](http://img.shields.io/badge/Bedrock%20Frontiers-official-orange.png)](https://github.com/BedrockFrontiers)
+  [![license](http://img.shields.io/badge/license-Apache%20License%202.0-blue.png)](https://www.apache.org/licenses/LICENSE-2.0) \
+  [![made-with-love](http://img.shields.io/badge/made%20with-❤-lightpink.png)](https://github.com/BedrockFrontiers/sol/stargazers)
+  [![open-source](http://img.shields.io/badge/project-open%20source-lightpurple.png)](https://github.com/BedrockFrontiers/sol)
 </div>
 
-# Sol Programming Language
+---
 
 Sol is a programming language focused exclusively on automation, designed to simplify and expedite repetitive tasks and complex processes.
 
