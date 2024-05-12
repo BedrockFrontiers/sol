@@ -17,4 +17,4 @@ The `tests/` directory contains automated tests for various components of the So
 Developers can run the tests using a testing framework or tool compatible with the Sol language. These tests can be executed as part of the continuous integration (CI) pipeline to automatically validate changes and contributions to the Sol language project.
 
 #### Contribution:
-Contributors are encouraged to expand the test suite by adding new test cases to cover additional language features, edge cases, and error scenarios. Consistent and comprehensive testing helps maintain the quality and stability of the Sol language implementation. But first, read the [Contribution Guideline](../docs/contribution.md)
+Contributors are encouraged to expand the test suite by adding new test cases to cover additional language features, edge cases, and error scenarios. Consistent and comprehensive testing helps maintain the quality and stability of the Sol language implementation. But first, read the [Contributing Guide](../docs/contribution.md)
