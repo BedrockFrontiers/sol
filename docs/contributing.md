@@ -25,7 +25,7 @@ git checkout -b my-contribution
 5. **Test Your Changes**: Test your changes thoroughly to ensure they work as expected and do not introduce any regressions.
 
 6. **Commit Your Changes**: Once you're satisfied with your changes, commit them to your branch:
-
+teste teste
 ```nix
 git add .
 ```
