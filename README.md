@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://github.com/BedrockFrontiers/sol/blob/main/assets/sol-logo.png" alt="Sol Programming Language" height="250" width="250" />
+</div>
+
 # Sol Programming Language
 
 Sol is a programming language focused exclusively on automation, designed to simplify and expedite repetitive tasks and complex processes.
