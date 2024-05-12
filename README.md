@@ -18,8 +18,12 @@ Sol is a programming language focused exclusively on automation, designed to sim
 
 ## Contributing
 
-If you're interested in contributing to the development of the Sol language, feel free to open an issue or submit a pull request. All contributions are welcome!
+Before you start contributing, we kindly ask you to take a moment to read our [Contributing Guide](./docs/contributing.md). This guide outlines the process for contributing to Sol, including how to submit bug reports, suggest enhancements, and make code contributions.
+
+By familiarizing yourself with our contributing guidelines, you'll ensure that your contributions align with our project's goals and standards. Additionally, you'll have a clear understanding of how to engage with our community and make meaningful contributions to the project.
+
+Whether you're a seasoned developer or new to open source, we value your input and welcome contributions from individuals of all backgrounds and skill levels. Together, we can make Sol an even better language for automation.
 
 ## License
 
-This project is licensed under the [Apache License 2.0](https://github.com/BedrockFrontiers/sol/blob/main/LICENSE).
+This project is licensed under the [Apache License 2.0](./LICENSE).
