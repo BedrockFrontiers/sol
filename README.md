@@ -27,3 +27,7 @@ Whether you're a seasoned developer or new to open source, we value your input a
 ## License
 
 This project is licensed under the [Apache License 2.0](./LICENSE).
+
+---
+
+**Note:** For detailed information on the Sol language syntax, features, and standard library, refer to the [Sol Language Reference](./docs/reference.md).
