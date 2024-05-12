@@ -4,10 +4,11 @@ The `pkg/` directory contains the core packages and modules of the Sol language.
 
 #### Directory Structure
 
-- `lexer/`: Package for lexical analysis of Sol source code.
+- `lexical/`: Package for lexical analysis of Sol source code.
 - `parser/`: Package for syntactical analysis and parsing of Sol code into an abstract syntax tree (AST).
 - `svm/`: Package for the Sol virtual machine (SVM), responsible for interpreting and executing Sol bytecode.
 - `interpreter/`: Package for interpreting Sol code directly without compilation.
+- `utils/`: Package for help utils functions.
 
 #### Contributing
 
