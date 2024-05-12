@@ -5,7 +5,7 @@
   
   [![bedrock-originals](http://img.shields.io/badge/Bedrock%20Frontiers-official-orange.png)](https://github.com/BedrockFrontiers)
   [![license](http://img.shields.io/badge/license-Apache%20License%202.0-blue.png)](https://www.apache.org/licenses/LICENSE-2.0) \
-  [![made-with-love](http://img.shields.io/badge/made%20with-❤-lightpink.png)](https://github.com/BedrockFrontiers/sol/stargazers)
+  [![made-with-love](http://img.shields.io/badge/made%20with-❤-lightpink.png)](https://github.com/BedrockFrontiers/sol/graphs/contributors)
   [![open-source](http://img.shields.io/badge/project-open%20source-lightpurple.png)](https://github.com/BedrockFrontiers/sol)
   [![in-development](http://img.shields.io/badge/still-in%20development-red.png)](https://github.com/BedrockFrontiers/sol)
 </div>
