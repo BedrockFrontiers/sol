@@ -2,11 +2,6 @@
 
 The `cmd/` directory contains command line tools related to the Sol language. These tools provide functionality for compiling, debugging, and managing Sol programs from the command line.
 
-#### Directory Structure
-
-- `soldbg/`: Command line tool for debugging Sol programs, allowing developers to inspect and troubleshoot their code.
-- Other Tools: Additional command line tools for analyzing, formatting, and managing Sol code.
-
 #### Usage
 
 Each subdirectory within `cmd/` contains a specific command line tool for a particular purpose. To use these tools, navigate to the corresponding directory and follow the instructions provided in the tool's README.md file.
