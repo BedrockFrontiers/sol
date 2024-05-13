@@ -23,6 +23,9 @@ typedef struct Token {
 } Token;
 
 void lexer_init(const char* source); /**< Initializes the lexer with the source code. */
-Token* lexer_next_token(const char* source, const int source_size, int cur_index); /**< Retrieves the next token from the source code. */
+void free_tokens(Token* head); /**< Free all tokens. */
+Token* add_token(Token* head, Token* new_token); /**< Retrieve a token with next token and proceed. */
+Token* create_token(const int cur_index, const int start, const char* source); /**< Retrieves a created token. */
+Token* lexer_next_token(const char* source, const int source_size, int* cur_index); /**< Retrieves the next token from the source code. */
 
 #endif
