@@ -24,13 +24,14 @@
  * @param source The input source code string.
  * @return A pointer to the newly created token.
  */
-Token* create_token(const int cur_index, const int start, const char* source) {
+Token* create_token(const int cur_index, const int start, const int cur_line, const char* source) {
     Token* token = (Token*)malloc(sizeof(Token));
 
     int lexeme_length = cur_index - start + 1;
     token->lexeme = (char*)malloc(lexeme_length);
     strncpy(token->lexeme, &source[start], lexeme_length);
     token->lexeme[lexeme_length - 1] = '\0';
+    token->line = cur_line;
 
     token->next = NULL;
     return token;
@@ -60,6 +61,19 @@ Token* add_token(Token* head, Token* new_token) {
 }
 
 /**
+ * Function to free the memory allocated for a token.
+ * 
+ * This function frees the memory allocated for the given token's lexeme
+ * and the token itself.
+ * 
+ * @param token The token to be freed.
+ */
+void free_token(Token* token) {
+    free(token->lexeme);
+    free(token);
+}
+
+/**
  * Function to free the memory allocated for the token list.
  * 
  * This function iterates through the token list and frees the memory allocated
@@ -72,8 +86,7 @@ void free_tokens(Token* head) {
     while (head != NULL) {
         Token* temp = head;
         head = head->next;
-        free(temp->lexeme);
-        free(temp);
+        free_token(temp);
     }
 }
 
@@ -85,13 +98,18 @@ void free_tokens(Token* head) {
  * @param cur_index The current index in the source code string.
  * @return A pointer to the next token.
  */
-Token* lexer_next_token(const char* source, const int source_size, int* cur_index) {
+Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line) {
     while (*cur_index < source_size && IS_WSPACE(source[*cur_index])) {
         (*cur_index)++;
     }
 
+    if (source[*cur_index] == '\n') {
+        (*cur_index)++;
+        (*cur_line)++;
+    }
+
     if (*cur_index >= source_size) {
-        Token* token = create_token(*cur_index, *cur_index, source);
+        Token* token = create_token(*cur_index, *cur_index, *cur_line, source);
         token->kind = TOKEN_EOF;
         return token;
     }
@@ -102,13 +120,13 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 
         while (*cur_index < source_size && source[*cur_index] != '"') {
             if (source[*cur_index] == '\\' && *cur_index + 1 < source_size) {
-                (*cur_index)++; // Avança para ignorar o caractere de escape
+                (*cur_index)++;
             }
             (*cur_index)++;
         }
 
         if (*cur_index < source_size && source[*cur_index] == '"') {
-            Token* token = create_token(*cur_index, start, source);
+            Token* token = create_token(*cur_index, start, *cur_line, source);
             token->kind = TOKEN_STRING;
             (*cur_index)++;
             return token;
@@ -129,7 +147,7 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
             }
         }
 
-        Token* token = create_token(*cur_index, start, source);
+        Token* token = create_token(*cur_index, start, *cur_line, source);
         token->kind = TOKEN_NUMBER;
         return token;
     }
@@ -142,7 +160,7 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
             (*cur_index)++;
         }
 
-        Token* token = create_token(*cur_index, start, source);
+        Token* token = create_token(*cur_index, start, *cur_line, source);
         if (strcmp(token->lexeme, "true") == 0 || strcmp(token->lexeme, "false") == 0) {
             token->kind = TOKEN_BOOLEAN;
         } else {
@@ -152,13 +170,13 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
     }
 
     if (source[*cur_index] == '+' || source[*cur_index] == '-' || source[*cur_index] == '*' || source[*cur_index] == '/') {
-        Token* token = create_token(*cur_index + 1, *cur_index, source);
+        Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, source);
         token->kind = TOKEN_SYMBOL;
         (*cur_index)++;
         return token;
     }
 
-    Token* token = create_token(*cur_index + 1, *cur_index, source);
+    Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, source);
     token->kind = TOKEN_SYMBOL;
     (*cur_index)++;
     return token;
@@ -172,13 +190,14 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
  * 
  * @param source The input source code string.
  */
-void lexer_init(const char* source) {
+Token* lexize(const char* source) {
     const int source_size = strlen(source);
     Token* token_list = NULL;
     int cur_index = 0;
+    int cur_line = 1;
 
     while (cur_index < source_size) {
-        Token* token = lexer_next_token(source, source_size, &cur_index);
+        Token* token = lexer_next_token(source, source_size, &cur_index, &cur_line);
         
         if(token->kind == TOKEN_EOF)
             break;
@@ -190,9 +209,9 @@ void lexer_init(const char* source) {
 
     Token* current = token_list;
     while (current) {
-        printf("Token Value: %s | Token Type: %d\n", current->lexeme, current->kind);
+        printf("Token Value: %s | Token Type: %d | Token Line: %d\n", current->lexeme, current->kind, current->line);
         current = current->next;
     }
 
-    free_tokens(token_list);
+    return token_list;
 }

@@ -17,15 +17,17 @@ typedef enum {
 } TokenType;
 
 typedef struct Token {
-    TokenType kind;    /**< Type of the token. */
-    char* lexeme;      /**< Lexeme associated with the token. */
-    struct Token* next;/**< Pointer to the next token in a linked list. */
+    TokenType kind;     /**< Type of the token. */
+    char* lexeme;       /**< Lexeme associated with the token. */
+    int line;           /**< Line of token. */
+    struct Token* next; /**< Pointer to the next token in a linked list. */
 } Token;
 
-void lexer_init(const char* source); /**< Initializes the lexer with the source code. */
+void free_token(Token* token); /**< Free token. */
 void free_tokens(Token* head); /**< Free all tokens. */
+Token* lexize(const char* source); /**< Retrieve a token list from the lexer with the source code. */
 Token* add_token(Token* head, Token* new_token); /**< Retrieve a token with next token and proceed. */
-Token* create_token(const int cur_index, const int start, const char* source); /**< Retrieves a created token. */
-Token* lexer_next_token(const char* source, const int source_size, int* cur_index); /**< Retrieves the next token from the source code. */
+Token* create_token(const int cur_index, const int start, const int line, const char* source); /**< Retrieves a created token. */
+Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line); /**< Retrieves the next token from the source code. */
 
 #endif
