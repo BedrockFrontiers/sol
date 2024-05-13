@@ -14,75 +14,185 @@
 #define IS_ALNUM(c)  (IS_ALPHA(c) || IS_DIGIT(c))
 #define IS_WSPACE(c) ((c) == ' ' || (c) == '\t' || (c) == '\r' || (c) == '\n')
 
-Token* lexer_next_token(const char* source, const int source_size, int cur_index) {
-    /**
-     * Function to retrieve the next token from the input source code.
-     * 
-     * @param source The input source code string.
-     * @param source_size The size of the input source code string.
-     * @param cur_index The current index in the source code string.
-     * @return A pointer to the next token.
-     */
+/**
+ * Function to create a new token.
+ * 
+ * This function creates a new token based on the given parameters.
+ * 
+ * @param cur_index The current index in the source code string.
+ * @param start The starting index of the lexeme in the source code string.
+ * @param source The input source code string.
+ * @return A pointer to the newly created token.
+ */
+Token* create_token(const int cur_index, const int start, const char* source) {
+    Token* token = (Token*)malloc(sizeof(Token));
 
-    if (cur_index >= source_size) {
-        Token* token = (Token*)malloc(sizeof(Token));
+    int lexeme_length = cur_index - start + 1;
+    token->lexeme = (char*)malloc(lexeme_length);
+    strncpy(token->lexeme, &source[start], lexeme_length);
+    token->lexeme[lexeme_length - 1] = '\0';
+
+    token->next = NULL;
+    return token;
+}
+
+/**
+ * Function to add a new token to the end of the token list.
+ * 
+ * This function adds a new token to the end of the existing token list. If the
+ * list is empty, it returns the new token as the head of the list.
+ * 
+ * @param head The head of the current token list.
+ * @param new_token The new token to be added.
+ * @return The head of the updated token list.
+ */
+Token* add_token(Token* head, Token* new_token) {
+    if (head == NULL) {
+        return new_token;
+    } else {
+        Token* current = head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = new_token;
+        return head;
+    }
+}
+
+/**
+ * Function to free the memory allocated for the token list.
+ * 
+ * This function iterates through the token list and frees the memory allocated
+ * for each token and its lexeme. It also frees the memory allocated for the token
+ * list itself.
+ * 
+ * @param head The head of the token list to be freed.
+ */
+void free_tokens(Token* head) {
+    while (head != NULL) {
+        Token* temp = head;
+        head = head->next;
+        free(temp->lexeme);
+        free(temp);
+    }
+}
+
+/**
+ * Function to retrieve the next token from the input source code.
+ * 
+ * @param source The input source code string.
+ * @param source_size The size of the input source code string.
+ * @param cur_index The current index in the source code string.
+ * @return A pointer to the next token.
+ */
+Token* lexer_next_token(const char* source, const int source_size, int* cur_index) {
+    while (*cur_index < source_size && IS_WSPACE(source[*cur_index])) {
+        (*cur_index)++;
+    }
+
+    if (*cur_index >= source_size) {
+        Token* token = create_token(*cur_index, *cur_index, source);
         token->kind = TOKEN_EOF;
-        token->lexeme = NULL;
-        token->next = NULL;
         return token;
     }
 
-    while (IS_WSPACE(source[cur_index]))
-        cur_index++;
+    if (source[*cur_index] == '"') {
+        int start = (*cur_index) + 1;
+        (*cur_index)++;
 
-    // Getting operators.
-    if (source[cur_index] == '+' || source[cur_index] == '-' || source[cur_index] == '*' || source[cur_index] == '/') {
-        Token* token = (Token*)malloc(sizeof(Token)); // Alloc memory necessary to initialize this Token structure.
+        while (*cur_index < source_size && source[*cur_index] != '"') {
+            if (source[*cur_index] == '\\' && *cur_index + 1 < source_size) {
+                (*cur_index)++; // Avança para ignorar o caractere de escape
+            }
+            (*cur_index)++;
+        }
 
-        token->kind = TOKEN_OPERATOR;
-        token->lexeme = (char*)malloc(2);
-        token->lexeme[0] = source[cur_index];
-        token->lexeme[1] = '\0';
-
-        token->next = NULL;
-        return token;
-    }
-
-    // Getting strings.
-    if (source[cur_index] == '"') {
-        int start = cur_index + 1;
-        cur_index++;
-
-        while(source[cur_index] != '"' && cur_index < source_size)
-            cur_index++;
-
-        if (source[cur_index] == '"') {
-            Token* token = (Token*)malloc(sizeof(Token)); // Alloc memory necessary to initialize this Token structure.
+        if (*cur_index < source_size && source[*cur_index] == '"') {
+            Token* token = create_token(*cur_index, start, source);
             token->kind = TOKEN_STRING;
-
-            int lexeme_length = cur_index - start + 1;
-            token->lexeme = (char*)malloc(lexeme_length);
-            strncpy(token->lexeme, &source[start], lexeme_length);
-            token->lexeme[lexeme_length - 1] = '\0';
-
-            token->next = NULL;
+            (*cur_index)++;
             return token;
         }
     }
 
-    return NULL;
+    if (IS_DIGIT(source[*cur_index])) {
+        int start = *cur_index;
+
+        while (*cur_index < source_size && IS_DIGIT(source[*cur_index])) {
+            (*cur_index)++;
+        }
+
+        if (*cur_index < source_size && source[*cur_index] == '.') {
+            (*cur_index)++;
+            while (*cur_index < source_size && IS_DIGIT(source[*cur_index])) {
+                (*cur_index)++;
+            }
+        }
+
+        Token* token = create_token(*cur_index, start, source);
+        token->kind = TOKEN_NUMBER;
+        return token;
+    }
+
+    if (IS_ALPHA(source[*cur_index])) {
+        int start = *cur_index;
+        (*cur_index)++;
+
+        while (*cur_index < source_size && IS_ALPHA(source[*cur_index])) {
+            (*cur_index)++;
+        }
+
+        Token* token = create_token(*cur_index, start, source);
+        if (strcmp(token->lexeme, "true") == 0 || strcmp(token->lexeme, "false") == 0) {
+            token->kind = TOKEN_BOOLEAN;
+        } else {
+            token->kind = TOKEN_IDENTIFIER;
+        }
+        return token;
+    }
+
+    if (source[*cur_index] == '+' || source[*cur_index] == '-' || source[*cur_index] == '*' || source[*cur_index] == '/') {
+        Token* token = create_token(*cur_index + 1, *cur_index, source);
+        token->kind = TOKEN_SYMBOL;
+        (*cur_index)++;
+        return token;
+    }
+
+    Token* token = create_token(*cur_index + 1, *cur_index, source);
+    token->kind = TOKEN_SYMBOL;
+    (*cur_index)++;
+    return token;
 }
 
-
+/**
+ * Function to initialize the lexical analyzer and tokenize the input source code.
+ * 
+ * This function iterates through the input source code string and identifies tokens
+ * such as operators and strings. It prints the value and type of each token found.
+ * 
+ * @param source The input source code string.
+ */
 void lexer_init(const char* source) {
     const int source_size = strlen(source);
+    Token* token_list = NULL;
     int cur_index = 0;
 
     while (cur_index < source_size) {
-        Token* token = lexer_next_token(source, source_size, cur_index);
+        Token* token = lexer_next_token(source, source_size, &cur_index);
+        
+        if(token->kind == TOKEN_EOF)
+            break;
 
-        if (token != NULL)
-            printf("Token Value: %s | Token Type: %d\n", token->lexeme, token->kind); // Show token value.
-        cur_index++;
+        if (token) {
+            token_list = add_token(token_list, token);
+        }
     }
+
+    Token* current = token_list;
+    while (current) {
+        printf("Token Value: %s | Token Type: %d\n", current->lexeme, current->kind);
+        current = current->next;
+    }
+
+    free_tokens(token_list);
 }
