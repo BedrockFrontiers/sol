@@ -5,18 +5,14 @@
  * This program demonstrates the usage of the lexical analyzer
  * by accepting input from the user, initializing the lexer,
  * and tokenizing the input text.
- *
- * It prompts the user to enter text, then initializes the lexer
- * with the input text and prints the tokens recognized by the lexer.
- * Finally, it exits with status 0.
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "../../pkg/lexical/lexical.h"
-#include "../../pkg/utils/bstring.h"
+#include "lexical.h"
+#include "input_reader.h"
 
 int main() {
     char* input;
@@ -24,8 +20,15 @@ int main() {
     printf("Insert your input here: ");
     input = read_input();
 
-    lexer_init(input);
+    Token* tokens = lexize(input);
     free(input);
 
+    Token* current = tokens;
+    while (current) {
+        printf("Token Value: %s | Token Type: %d | Token Line: %d\n", current->lexeme, current->kind, current->line);
+        current = current->next;
+    }
+
+    getchar(); // Prevent to close window on done.
     return 0;
 }
