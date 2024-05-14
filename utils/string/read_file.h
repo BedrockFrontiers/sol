@@ -1,10 +1,10 @@
+#ifndef READ_FILE_H
+#define READ_FILE_H
+
 /**
  * @file read_file.h
  * @brief Header file for text file reading functions.
  */
-
-#ifndef READ_FILE_H
-#define READ_FILE_H
 
 /**
  * @brief Reads content from a text file.
