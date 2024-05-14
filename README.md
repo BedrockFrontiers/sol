@@ -31,10 +31,6 @@ Sol is a programming language focused exclusively on automation, designed to sim
 
 - **Integration Support:** Sol is compatible with a variety of platforms and services, allowing easy integration with other tools and systems.
 
-Absolutely, here's a more polished version:
-
----
-
 ## Running Tests with the Shell Script
 
 This guide provides instructions on running tests using the provided shell script. Follow the steps below to execute tests for your Sol programming language project.
