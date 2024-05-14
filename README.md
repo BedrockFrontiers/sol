@@ -14,6 +14,7 @@
   [![Contributors](https://img.shields.io/github/contributors/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/sol/graphs/contributors)
   [![Issues](https://img.shields.io/github/issues/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/sol/issues)
   [![Pull Requests](https://img.shields.io/github/issues-pr/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/sol/pulls)
+  [![Commit Activity](https://img.shields.io/github/commit-activity/t/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/sol/commits/main)
   [![Last Commit](https://img.shields.io/github/last-commit/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/sol/commits/main)
 </div>
 
