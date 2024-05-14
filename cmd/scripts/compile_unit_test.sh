@@ -37,29 +37,36 @@ echo "Compiling files..."
 # Function to compile the source files
 compile_sources() {
    src_files=""
+   includes_folders=""
 
    # Loop through each source file in the PKG_DIR and UTILS_DIR
    for file in $(find $PKG_DIR $UTILS_DIR -type f -name "*.c"); do
       src_files="$src_files $file"
    done
 
+   # Loop through each subdirectory in PKG_DIR and UTILS_DIR to gather include folders
+   for dir in $(find $PKG_DIR $UTILS_DIR -mindepth 1 -type d); do
+      includes_folders+=" -I$dir"
+   done
+
+   echo $includes_folders
+
    # Compile the test file along with all source files
-   gcc $TEST_DIR/$test_file $src_files -o $BIN_DIR/${test_file%.c}.exe -I $PKG_DIR/lexical -I $UTILS_DIR/string -no-pie
+   gcc $TEST_DIR/$test_file $src_files -o $BIN_DIR/${test_file%.c}.exe $includes_folders -no-pie
 
    # Check if compilation was successful
    if [ $? -eq 0 ]; then
-      echo "Compilation successful!"
+      # Display the path to the compiled executable
+      echo "Compilation done! Executable path: $BIN_DIR/${test_file%.c}.exe"
    else
       echo "Error: Compilation failed."
+      read -p "Press Enter to continue..." pause
       exit 1
    fi
 }
 
 # Call the compile_sources function
 compile_sources
-
-# Display the path to the compiled executable
-echo "Compilation done! Executable path: $BIN_DIR/${test_file%.c}.exe"
 
 # Pause for user to read the message
 read -p "Press Enter to continue..." pause
