@@ -44,7 +44,7 @@ compile_sources() {
    done
 
    # Compile the test file along with all source files
-   gcc $TEST_DIR/$test_file $src_files -o $BIN_DIR/${test_file%.c}.exe -I $PKG_DIR/lexical -I $UTILS_DIR -no-pie
+   gcc $TEST_DIR/$test_file $src_files -o $BIN_DIR/${test_file%.c}.exe -I $PKG_DIR/lexical -I $UTILS_DIR/string -no-pie
 
    # Check if compilation was successful
    if [ $? -eq 0 ]; then
