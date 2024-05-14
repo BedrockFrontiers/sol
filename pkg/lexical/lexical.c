@@ -108,6 +108,32 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
         (*cur_line)++;
     }
 
+    if (source[*cur_index] == '/' && *cur_index + 1 < source_size && source[*cur_index + 1] == '/') {
+        while (*cur_index < source_size && source[*cur_index] != '\n') {
+            (*cur_index)++;
+        }
+
+        (*cur_line)++;
+        return lexer_next_token(source, source_size, cur_index, cur_line);
+    }
+
+    if (source[*cur_index] == '/' && *cur_index + 1 < source_size && source[*cur_index + 1] == '*') {
+        (*cur_index) += 2;
+        while (*cur_index < source_size - 1 && !(source[*cur_index] == '*' && source[*cur_index + 1] == '/')) {
+            if (source[*cur_index] == '\n') {
+                (*cur_line)++;
+            }
+            (*cur_index)++;
+        }
+        if (*cur_index < source_size - 1) {
+            (*cur_index) += 2;
+            return lexer_next_token(source, source_size, cur_index, cur_line);
+        } else {
+            Token* token = create_token(*cur_index, *cur_index, *cur_line, source);
+            return token;
+        }
+    }
+
     if (*cur_index >= source_size) {
         Token* token = create_token(*cur_index, *cur_index, *cur_line, source);
         token->kind = TOKEN_EOF;
