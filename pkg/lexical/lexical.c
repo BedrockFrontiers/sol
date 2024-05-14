@@ -53,12 +53,10 @@ void free_tokens(Token* head) {
 }
 
 Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line) {
-	while (*cur_index < source_size && IS_WSPACE(source[*cur_index]))
+	while (*cur_index < source_size && IS_WSPACE(source[*cur_index])) {
+		if (source[*cur_index] == '\n')
+			(*cur_line)++;
 		(*cur_index)++;
-
-	if (source[*cur_index] == '\n') {
-		(*cur_index)++;
-		(*cur_line)++;
 	}
 
 	if (source[*cur_index] == '/' && *cur_index + 1 < source_size && source[*cur_index + 1] == '/') {
@@ -172,6 +170,7 @@ Token* lexize(const char* source) {
 
 		if (token)
 			token_list = add_token(token_list, token);
+
 	}
 
 	return token_list;
