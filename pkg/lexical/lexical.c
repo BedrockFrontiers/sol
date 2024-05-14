@@ -207,11 +207,5 @@ Token* lexize(const char* source) {
         }
     }
 
-    Token* current = token_list;
-    while (current) {
-        printf("Token Value: %s | Token Type: %d | Token Line: %d\n", current->lexeme, current->kind, current->line);
-        current = current->next;
-    }
-
     return token_list;
 }
