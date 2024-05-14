@@ -24,6 +24,7 @@ read -p "Enter the test unit file name (e.g., name.c): " test_file
 # Check if the test file exists
 if [ ! -f "$TEST_DIR/$test_file" ]; then
    echo "Error: Test file not found."
+   read -p "Press Enter to continue..." pause
    exit 1
 fi
 
