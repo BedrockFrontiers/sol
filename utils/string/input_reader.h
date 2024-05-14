@@ -1,10 +1,10 @@
+#ifndef INPUT_READER_H
+#define INPUT_READER_H
+
 /**
  * @file input_reader.h
  * @brief Header file for input reading functions.
  */
-
-#ifndef INPUT_READER_H
-#define INPUT_READER_H
 
 /**
  * @brief Checks the input buffer for binary string characters.
