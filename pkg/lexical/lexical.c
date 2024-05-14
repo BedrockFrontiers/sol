@@ -170,9 +170,8 @@ Token* lexize(const char* source) {
 	while (cur_index < source_size) {
 		Token* token = lexer_next_token(source, source_size, &cur_index, &cur_line);
 
-		if (token) {
+		if (token)
 			token_list = add_token(token_list, token);
-		}
 	}
 
 	return token_list;
