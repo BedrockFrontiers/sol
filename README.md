@@ -31,6 +31,50 @@ Sol is a programming language focused exclusively on automation, designed to sim
 
 - **Integration Support:** Sol is compatible with a variety of platforms and services, allowing easy integration with other tools and systems.
 
+Absolutely, here's a more polished version:
+
+---
+
+## Running Tests with the Shell Script
+
+This guide provides instructions on running tests using the provided shell script. Follow the steps below to execute tests for your Sol programming language project.
+
+### Prerequisites
+
+Before running tests, ensure you have the following:
+
+- The `compile_unit_test.sh` shell script file on `cmd/scripts`.
+- Test unit files located in the `tests/units` directory.
+- Source code files located in the `pkg` and `utils` directories.
+
+### Instructions
+
+1. **Open Terminal**: Launch your terminal application.
+2. **Navigate to Project Directory**: Change your current directory to the location of your Sol project.
+
+```nix
+cd path/to/your/sol/project
+```
+
+3. **Execute Shell Script**: Run the shell script by entering the following command:
+
+```nix
+./cmd/scripts/compile_unit_test.sh
+```
+
+4. **Enter Test Unit Name**: When prompted, input the name of the test unit file you wish to compile. For example, if your test unit file is named `lexer_test.c`, type `lexer_test.c` and press Enter.
+5. **Compilation Process**: The shell script will compile the specified test unit file along with all source files found in the `pkg` and `utils` directories.
+6. **Verify Compilation**: After compilation, the path to the compiled executable will be displayed. This executable contains the compiled test unit.
+7. **Execute Compiled Test**: To run the compiled test, execute the compiled executable from the terminal. For example:
+
+```nix
+./tests/units/bin/lexer_test.exe
+```
+
+Replace `lexer_test.exe` with the name of your compiled test executable.
+
+8. **Interpret Test Results**: Observe the test output to determine if the tests passed or failed. Any error messages or unexpected behavior indicate test failures.
+
 ## Contributing
 
 Before you start contributing, we kindly ask you to take a moment to read our [Contributing Guide](./docs/contributing.md). This guide outlines the process for contributing to Sol, including how to submit bug reports, suggest enhancements, and make code contributions.
