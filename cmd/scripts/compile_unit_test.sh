@@ -49,8 +49,6 @@ compile_sources() {
       includes_folders+=" -I$dir"
    done
 
-   echo $includes_folders
-
    # Compile the test file along with all source files
    gcc $TEST_DIR/$test_file $src_files -o $BIN_DIR/${test_file%.c}.exe $includes_folders -no-pie
 
