@@ -85,13 +85,6 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 		}
 	}
 
-	if (*cur_index >= source_size) {
-		Token* token = create_token(*cur_index, *cur_index, *cur_line, source);
-		token->lexeme = "EOF";
-		token->kind = TOKEN_EOF;
-		return token;
-	}
-
 	if (source[*cur_index] == '"') {
 		int start = (*cur_index) + 1;
 		(*cur_index)++;
@@ -137,11 +130,10 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 			(*cur_index)++;
 
 		Token* token = create_token(*cur_index, start, *cur_line, source);
-		if (strcmp(token->lexeme, "true") == 0 || strcmp(token->lexeme, "false") == 0) {
+		if (strcmp(token->lexeme, "true") == 0 || strcmp(token->lexeme, "false") == 0)
 			token->kind = TOKEN_BOOLEAN;
-		} else {
+		else
 			token->kind = TOKEN_IDENTIFIER;
-		}
 		return token;
 	}
 
@@ -150,12 +142,14 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 		token->kind = TOKEN_SYMBOL;
 		(*cur_index)++;
 		return token;
+	} else {
+		Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, source);
+		token->kind = TOKEN_SYMBOL;
+		(*cur_index)++;
+		return token;
 	}
 
-	Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, source);
-	token->kind = TOKEN_SYMBOL;
-	(*cur_index)++;
-	return token;
+	return NULL;
 }
 
 Token* lexize(const char* source) {
@@ -170,8 +164,12 @@ Token* lexize(const char* source) {
 
 		if (token)
 			token_list = add_token(token_list, token);
-
 	}
+
+	Token* eof_token = create_token(cur_index, cur_index, cur_line, source);
+	eof_token->lexeme = strdup("EOF");
+	eof_token->kind = TOKEN_EOF;
+	token_list = add_token(token_list, eof_token);
 
 	return token_list;
 }
