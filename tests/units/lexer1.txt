@@ -1,0 +1,13 @@
+@import("io")
+
+/*
+	This is a multi-comment line.
+	For real.
+*/
+pub fn my_func()
+	IO.write("Hello, World!")
+end
+
+automate("*")
+	// pass...
+end
