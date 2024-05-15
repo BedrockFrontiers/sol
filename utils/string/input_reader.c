@@ -19,12 +19,17 @@ char* read_input() {
 	size_t capacity = BUFFER_SIZE;
 
 	while (1) {
-		if (fgets(buffer + size, BUFFER_SIZE, stdin) == NULL)
-			
+		if (fgets(buffer + size, BUFFER_SIZE - size, stdin) == NULL)
 			break;
+
 		size_t line_size = strlen(buffer + size);
 
-		if (line_size < BUFFER_SIZE - 1 || buffer[size + (line_size - 1)] == '\n')
+		if (buffer[size + line_size - 1] == '\n') {
+			buffer[size + line_size - 1] = '\0';
+			line_size--;
+		}
+
+		if (line_size < BUFFER_SIZE - size - 1)
 			break;
 
 		size += line_size;
