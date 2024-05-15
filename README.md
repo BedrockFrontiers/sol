@@ -62,11 +62,10 @@ cd path\to\your\sol\project
 5. **Compilation Process**: The shell script will compile the specified test unit file along with all source files found in the `pkg` and `utils` directories.
 6. **Verify Compilation**: After compilation, the path to the compiled executable will be displayed. This executable contains the compiled test unit.
 7. **Execute Compiled Test**: To run the compiled test, execute the compiled executable from the generated path (`\tests\units\bin`).
+9. **Interpret Test Results**: Observe the test output to determine if the tests passed or failed. Any error messages or unexpected behavior indicate test failures.
 
 > [!IMPORTANT]\
 > Please refrain from executing the compiled .exe file directly from your terminal. Doing so may lead to inaccurate test results due to dependencies on text files and directory structures.
-
-9. **Interpret Test Results**: Observe the test output to determine if the tests passed or failed. Any error messages or unexpected behavior indicate test failures.
 
 ## Contributing
 
