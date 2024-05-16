@@ -29,6 +29,14 @@ typedef struct Token {
     struct Token* next; /**< Pointer to the next token in a linked list. */
 } Token;
 
+
+/**
+ * @brief Check if the character is a operator.
+ * 
+ * @param c The current character.
+ */
+int is_operator(char c);
+
 /**
  * @brief Frees memory allocated for a single token.
  * 
