@@ -57,7 +57,7 @@ int main() {
       return 1;
    }
    char* file_content;
-   file_content = read_file("..\\lexer1.txt");
+   file_content = read_file("..\\code.solg");
 
    Token* tokens = lexize(file_content);
    free(file_content);
