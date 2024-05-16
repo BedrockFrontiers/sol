@@ -41,25 +41,25 @@ const char* token_type_to_string(TokenType type) {
 }
 
 int main() {
-    if (!verify_execution_directory("\\tests\\units\\bin")) {
-       fprintf(stderr, "On running this test, run from his original path on: '\\tests\\units\\bin' to prevent errors.\n");
-       getchar();
-       return 1;
-    }
-    char* input;
+   if (!verify_execution_directory("\\tests\\units\\bin")) {
+      fprintf(stderr, "On running this test, run from his original path on: '\\tests\\units\\bin' to prevent errors.\n");
+      getchar();
+      return 1;
+   }
+   char* input;
 
-    printf("Insert your input here: ");
-    input = read_input();
+   printf("Insert your input here: ");
+   input = read_input();
 
-    Token* tokens = lexize(input);
-    free(input);
+   Token* tokens = lexize(input);
+   free(input);
 
-    Token* current = tokens;
-    while (current) {
-        printf("Token Value: %s | Token Type: %s | Token Line: %d\n", current->lexeme, token_type_to_string(current->kind), current->line);
-        current = current->next;
-    }
+   Token* current = tokens;
+   while (current) {
+      printf("Token Value: %s | Token Type: %s | Token Line: %d\n", current->lexeme, token_type_to_string(current->kind), current->line);
+      current = current->next;
+   }
 
-    getchar(); // Prevent to close window on done.
-    return 0;
+   getchar(); // Prevent to close window on done.
+   return 0;
 }
