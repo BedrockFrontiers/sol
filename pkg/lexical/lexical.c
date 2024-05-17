@@ -7,8 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <wchar.h>
-#include <wctype.h>
 #include "lexical.h"
 
 #define IS_ALPHA(c)  (iswalpha(c) || (c) ==  '_')
@@ -18,17 +16,11 @@
 
 #define OPERATORS "+-*/^"
 
-int inside_string = 0;
-
 int is_operator(char c) {
-	for (int i = 0; OPERATORS[i] != '\0'; i++) {
-		if (OPERATORS[i] == c)
-			return 1;
-	}
-	return 0;
+	return strchr(OPERATORS, c) != NULL;
 }
 
-Token* create_token(const int cur_index, const int start, const int cur_line, const char* source) {
+Token* create_token(const int cur_index, const int start, const int cur_line, const int cur_column, const char* source) {
 	Token* token = (Token*)malloc(sizeof(Token));
 	if (token == NULL) {
 		perror("Memory allocation error");
@@ -45,6 +37,7 @@ Token* create_token(const int cur_index, const int start, const int cur_line, co
 	strncpy(token->lexeme, &source[start], lexeme_length);
 	token->lexeme[lexeme_length - 1] = '\0';
 	token->line = cur_line;
+	token->column = cur_column;
 
 	token->next = NULL;
 	return token;
@@ -75,10 +68,12 @@ void free_tokens(Token* head) {
 	}
 }
 
-Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line) {
+Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line, int* cur_column, int* column_offset) {
 	while (*cur_index < source_size && IS_WSPACE(source[*cur_index])) {
-		if (source[*cur_index] == '\n')
+		if (source[*cur_index] == '\n') {
+			(*column_offset) = *cur_index + 1;
 			(*cur_line)++;
+		}
 		(*cur_index)++;
 	}
 
@@ -86,25 +81,25 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 		return NULL;
 
 	if (source[*cur_index] == '/' && *cur_index + 1 < source_size && source[*cur_index + 1] == '/') {
-		while (*cur_index < source_size && source[*cur_index] != '\n') {
+		while (*cur_index < source_size && source[*cur_index] != '\n')
 			(*cur_index)++;
-		}
-
-		(*cur_line)++;
-		return lexer_next_token(source, source_size, cur_index, cur_line);
+		(*column_offset) = *cur_index + 1;
+		return lexer_next_token(source, source_size, cur_index, cur_line, cur_column, column_offset);
 	}
 
 	if (source[*cur_index] == '/' && *cur_index + 1 < source_size && source[*cur_index + 1] == '*') {
 		(*cur_index) += 2;
 		while (*cur_index < source_size - 1 && !(source[*cur_index] == '*' && source[*cur_index + 1] == '/')) {
 			if (source[*cur_index] == '\n') {
+				(*column_offset) = *cur_index + 1;
 				(*cur_line)++;
 			}
 			(*cur_index)++;
 		}
 		if (*cur_index < source_size - 1) {
+			(*cur_column) = (*cur_index) + 1 - *column_offset;
 			(*cur_index) += 2;
-			return lexer_next_token(source, source_size, cur_index, cur_line);
+			return lexer_next_token(source, source_size, cur_index, cur_line, cur_column, column_offset);
 		} else {
 			printf("Error: Unterminated block comment at line %d\n", *cur_line);
 			getchar();
@@ -112,16 +107,16 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 		}
 	}
 
-	if (source[*cur_index] == '"') {
-		inside_string = 1;
+	(*cur_column) = (*cur_index) - *column_offset + 1;
 
+	if (source[*cur_index] == '"') {
 		int start = (*cur_index) + 1;
+		(*cur_column) = start - *column_offset;
 		(*cur_index)++;
 
 		while (*cur_index < source_size && source[*cur_index] != '"') {
-			if (source[*cur_index] == '\\' && *cur_index + 1 < source_size) {
+			if (source[*cur_index] == '\\' && *cur_index + 1 < source_size)
 				(*cur_index)++;
-			}
 			(*cur_index)++;
 		}
 
@@ -132,9 +127,8 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 		}
 
 		if (*cur_index < source_size && source[*cur_index] == '"') {
-			Token* token = create_token(*cur_index, start, *cur_line, source);
+			Token* token = create_token(*cur_index, start, *cur_line, *cur_column, source);
 			token->kind = TOKEN_STRING;
-			inside_string = 0;
 			(*cur_index)++;
 			return token;
 		}
@@ -142,12 +136,13 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 
 	if (IS_ALNUM(source[*cur_index])) {
 		int start = *cur_index;
+		(*cur_column) = start + 1 - *column_offset;
 		(*cur_index)++;
 
 		while (*cur_index < source_size && IS_ALNUM(source[*cur_index]))
 			(*cur_index)++;
 
-		Token* token = create_token(*cur_index, start, *cur_line, source);
+		Token* token = create_token(*cur_index, start, *cur_line, *cur_column, source);
 		if (strcmp(token->lexeme, "true") == 0 || strcmp(token->lexeme, "false") == 0)
 			token->kind = TOKEN_BOOLEAN;
 		else
@@ -157,29 +152,31 @@ Token* lexer_next_token(const char* source, const int source_size, int* cur_inde
 
 	if (IS_DIGIT(source[*cur_index])) {
 		int start = *cur_index;
+		(*cur_column) = start + 1 - *column_offset;
 
 		while (*cur_index < source_size && IS_DIGIT(source[*cur_index]))
 			(*cur_index)++;
 
 		if (*cur_index < source_size && source[*cur_index] == '.') {
 			(*cur_index)++;
-			while (*cur_index < source_size && IS_DIGIT(source[*cur_index])) {
+			while (*cur_index < source_size && IS_DIGIT(source[*cur_index]))
 				(*cur_index)++;
-			}
 		}
 
-		Token* token = create_token(*cur_index, start, *cur_line, source);
+		Token* token = create_token(*cur_index, start, *cur_line, *cur_column, source);
 		token->kind = TOKEN_NUMBER;
 		return token;
 	}
 
 	if (is_operator(source[*cur_index])) {
-		Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, source);
+		(*cur_column) = (*cur_index) + 1 - *column_offset;
+		Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, *cur_column, source);
 		token->kind = TOKEN_OPERATOR;
 		(*cur_index)++;
 		return token;
 	} else {
-		Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, source);
+		(*cur_column) = (*cur_index) + 1 - *column_offset;
+		Token* token = create_token(*cur_index + 1, *cur_index, *cur_line, *cur_column, source);
 		token->kind = TOKEN_SYMBOL;
 		(*cur_index)++;
 		return token;
@@ -192,17 +189,19 @@ Token* lexize(const char* source) {
 	const int source_size = strlen(source);
 	int cur_index = 0;
 	int cur_line = 1;
+	int cur_column = 1;
+	int column_offset = 0;
 
 	Token* token_list = NULL;
 
 	while (cur_index < source_size) {
-		Token* token = lexer_next_token(source, source_size, &cur_index, &cur_line);
+		Token* token = lexer_next_token(source, source_size, &cur_index, &cur_line, &cur_column, &column_offset);
 
 		if (token)
 			token_list = add_token(token_list, token);
 	}
 
-	Token* eof_token = create_token(cur_index, cur_index, cur_line, source);
+	Token* eof_token = create_token(cur_index, cur_index, cur_line, -1, source);
 	eof_token->lexeme = strdup("EOF");
 	eof_token->kind = TOKEN_EOF;
 	token_list = add_token(token_list, eof_token);
