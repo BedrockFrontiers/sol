@@ -64,7 +64,7 @@ int main() {
 
    Token* current = tokens;
    while (current) {
-      printf("Token Value: %s | Token Type: %s | Token Line: %d\n", current->lexeme, token_type_to_string(current->kind), current->line);
+      printf("Token Value: %s | Token Type: %s | (Line: %d, Column: %d)\n", current->lexeme, token_type_to_string(current->kind), current->line, current->column);
       current = current->next;
    }
 
