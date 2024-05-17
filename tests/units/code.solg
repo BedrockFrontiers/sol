@@ -6,7 +6,7 @@
 */
 pub fn my_func()
 	string store name = "Micheal"
-	IO.write("Hello, World!" + 👍✨)
+	IO.write("Hello, World, " + name)
 end
 
 automate("*")
