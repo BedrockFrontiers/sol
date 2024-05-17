@@ -26,6 +26,7 @@ typedef struct Token {
     TokenType kind;     /**< Type of the token. */
     char* lexeme;       /**< Lexeme associated with the token. */
     int line;           /**< Line of token. */
+    int column;         /**< Column of token. */
     struct Token* next; /**< Pointer to the next token in a linked list. */
 } Token;
 
@@ -77,7 +78,7 @@ Token* add_token(Token* head, Token* new_token);
  * @param source The source code string.
  * @return A pointer to the created token.
  */
-Token* create_token(const int cur_index, const int start, const int line, const char* source);
+Token* create_token(const int cur_index, const int start, const int line, const int column, const char* source);
 
 /**
  * @brief Retrieves the next token from the source code.
@@ -88,6 +89,6 @@ Token* create_token(const int cur_index, const int start, const int line, const 
  * @param cur_line Pointer to the current line number.
  * @return A pointer to the next token.
  */
-Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line);
+Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line, int* cur_column, int* column_offset);
 
 #endif
