@@ -39,11 +39,13 @@ This guide provides instructions on running tests using the provided shell scrip
 
 Before running tests, ensure you have the following:
 
-- The `compile_unit_test.sh` shell script file on `\cmd\scripts`.
+- The `compile_unit_test.sh` and `compile_all_unit_tests.sh` shell script files on `\cmd\scripts`.
 - Test unit files located in the `\tests\units` directory.
 - Source code files located in the `pkg` and `utils` directories.
 
 ### Instructions
+
+#### Compile single test
 
 1. **Open Terminal**: Launch your terminal application.
 2. **Navigate to Project Directory**: Change your current directory to the location of your Sol project.
@@ -58,11 +60,32 @@ cd path\to\your\sol\project
 .\cmd\scripts\compile_unit_test.sh
 ```
 
-4. **Enter Test Unit Name**: When prompted, input the name of the test unit file you wish to compile. For example, if your test unit file is named `lexer_test.c`, type `lexer_test.c` and press Enter.
+4. **Enter Test Unit Name**: When prompted, input the name of the test unit file you wish to compile. For example, if your test unit file is named `lexer.test.c`, type `lexer.test.c` and press Enter.
 5. **Compilation Process**: The shell script will compile the specified test unit file along with all source files found in the `pkg` and `utils` directories.
 6. **Verify Compilation**: After compilation, the path to the compiled executable will be displayed. This executable contains the compiled test unit.
 7. **Execute Compiled Test**: To run the compiled test, execute the compiled executable from the generated path (`\tests\units\bin`).
 9. **Interpret Test Results**: Observe the test output to determine if the tests passed or failed. Any error messages or unexpected behavior indicate test failures.
+
+#### Compile all tests
+
+1. **Open Terminal**: Launch your terminal application.
+2. **Navigate to Project Directory**: Change your current directory to the location of your Sol project.
+
+```bash
+cd path\to\your\sol\project
+```
+
+3. **Execute Shell Script**: Run the shell script by entering the following command:
+
+```bash
+.\cmd\scripts\compile_all_unit_tests.sh
+```
+
+4. **Compilation Process**: The shell script will compile all test unit files along with all source files found in the `pkg` and `utils` directories.
+5. **Verify Compilation**: After compilation, the path to the compiled executables will be displayed. This executables contains the compiled tests
+6.  unit.
+7. **Execute Compiled Test**: To run the compiled tests, execute one of the compiled executables from the generated path (`\tests\units\bin`).
+8. **Interpret Test Results**: Observe the test output to determine if the tests passed or failed. Any error messages or unexpected behavior indicate test failures.
 
 > [!IMPORTANT]\
 > Please refrain from executing the compiled .exe file directly from your terminal. Doing so may lead to inaccurate test results due to dependencies on text files and directory structures.
