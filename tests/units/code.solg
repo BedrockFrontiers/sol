@@ -6,6 +6,8 @@
 */
 pub fn my_func()
 	string store name = "Micheal"
+	IO.write("2.312" + "1.746")
+	IO.write(2.325)
 	IO.write("Hello, World, " + name)
 end
 
