@@ -17,4 +17,4 @@
  */
 int verify_execution_directory(const char* expected_dir);
 
-#endif /* DIRECTORY_CHECK_H */
+#endif
