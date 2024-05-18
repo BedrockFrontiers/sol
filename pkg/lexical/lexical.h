@@ -91,4 +91,6 @@ Token* create_token(const int cur_index, const int start, const int line, const 
  */
 Token* lexer_next_token(const char* source, const int source_size, int* cur_index, int* cur_line, int* cur_column, int* column_offset);
 
+
+const char* token_type_to_string(TokenType type);
 #endif
