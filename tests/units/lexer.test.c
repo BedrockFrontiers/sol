@@ -43,11 +43,8 @@ int main() {
    free(file_content);
 
    Token* current = tokens;
-   char lexerOutput[1000] = "";
-
    while (current) {
-      strcat(lexerOutput, current->lexeme);
-      strcat(lexerOutput, token_type_to_string(current->kind));
+      printf("Token Value: %s | Token Type: %s | Token Line: %d\n", current->lexeme, token_type_to_string(current->kind), current->line);
       current = current->next;
    }
 
