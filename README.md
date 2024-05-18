@@ -80,6 +80,10 @@ Whether you're a seasoned developer or new to open source, we value your input a
 The Threadmarks feature is a trademark owned by Bedrock Frontiers. All rights reserved.
 If you wish to use the Threadmarks name or logo, please refer to our [Trademark Guide](./docs/trademark.md).
 
+## Changelog
+
+To view the complete development history of the Sol Programming Language, please refer to the [Commits History](https://github.com/BedrockFrontiers/sol/commits/main).
+
 ## License
 
 This project is licensed under the [Apache License 2.0](./LICENSE).
