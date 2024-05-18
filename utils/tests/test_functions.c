@@ -1,64 +1,52 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 
+#define COLOR_RED     "\x1b[1;31m"
+#define COLOR_GREEN   "\x1b[1;32m"
+#define COLOR_RESET   "\x1b[0m"
 
-
-#define RED     "\x1b[1;31m"
-#define GREEN   "\x1b[1;32m"
-#define RESET_COLOR   "\x1b[0m"
-
-
-
-
-void describe(char *description) {
-
-    printf("\n%s%s%s\n", GREEN, description, RESET_COLOR);
-
+void describe(const char *description) {
+	printf("\n%sTest Description: %s%s\n", COLOR_GREEN, description, COLOR_RESET);
 }
 
-void finishTests(testsPassed, totalTests){
-    if(testsPassed < totalTests){
-        printf("\n%sPASSED %d of %d tests.%s", RED, testsPassed, totalTests, RESET_COLOR);
-    }else{
-        printf("\nPASSED %d of %d tests.",testsPassed, totalTests);
-    }
-}
-int expectToBeTrue(char *description, int condition) {
-
-    printf("%s%s: ", RESET_COLOR, description);
-
-    if (condition) {
-        printf("%sPASSED%s\n", GREEN, RESET_COLOR);
-    } else {
-        printf("%sNOT PASSED%s\n", RED, RESET_COLOR);
-    }
-    return condition;
+void finalizeTests(int testsPassed, int totalTests) {
+	if (testsPassed < totalTests)
+		printf("\n%sTest Results: PASSED %d of %d tests.%s\n", COLOR_RED, testsPassed, totalTests, COLOR_RESET);
+	else
+		printf("\nTest Results: PASSED %d of %d tests.\n", testsPassed, totalTests);
 }
 
-int expectToBe_str(char *description, char *expected_content, char *actual_content) {
-    printf("%s%s: ", RESET_COLOR, description);
-    if (strcmp(expected_content, actual_content) == 0) {
-        printf("%sPASSED%s\n", GREEN, RESET_COLOR);
-        return 1;
-    } else {
-        printf("%sNOT PASSED%s\n", RED, RESET_COLOR);
-        printf("%sExpected:%s\n%s\n", RESET_COLOR, expected_content, GREEN);
-        printf("%sActual:%s\n%s\n", RESET_COLOR, actual_content, RED);
-        return 0;
-    }
+int expectTrue(const char *description, int condition) {
+	printf("%sExpectation: %s%s: ", COLOR_RESET, description, COLOR_RESET);
+	if (condition)
+		printf("%sPASSED%s\n", COLOR_GREEN, COLOR_RESET);
+	else
+		printf("%sNOT PASSED%s\n", COLOR_RED, COLOR_RESET);
+	return condition;
 }
 
-int expectToNOTBe_str(char *description, char *expected_content, char *actual_content) {
-    printf("%s%s: ", RESET_COLOR, description);
-    if (strcmp(expected_content, actual_content) != 0) {
-        printf("%sPASSED%s\n", GREEN, RESET_COLOR);
-        return 1;
-    } else {
-        printf("%sNOT PASSED%s\n", RED, RESET_COLOR);
-        printf("%sExpected:%s\n%s\n", RESET_COLOR, expected_content, GREEN);
-        printf("%sActual:%s\n%s\n", RESET_COLOR, actual_content, RED);
-        return 0;
-    }
+int expectString(const char *description, const char *expected, const char *actual) {
+	printf("%sExpectation: %s%s: ", COLOR_RESET, description, COLOR_RESET);
+	if (strcmp(expected, actual) == 0) {
+		printf("%sPASSED%s\n", COLOR_GREEN, COLOR_RESET);
+		return 1;
+	} else {
+		printf("%sNOT PASSED%s\n", COLOR_RED, COLOR_RESET);
+		printf("%sExpected:%s\n%s\n", COLOR_RESET, expected, COLOR_GREEN);
+		printf("%sActual:%s\n%s\n", COLOR_RESET, actual, COLOR_RED);
+		return 0;
+	}
 }
 
+int expectNotString(const char *description, const char *unexpected, const char *actual) {
+	printf("%sExpectation: %s%s: ", COLOR_RESET, description, COLOR_RESET);
+	if (strcmp(unexpected, actual) != 0) {
+		printf("%sPASSED%s\n", COLOR_GREEN, COLOR_RESET);
+		return 1;
+	} else {
+		printf("%sNOT PASSED%s\n", COLOR_RED, COLOR_RESET);
+		printf("%sUnexpected:%s\n%s\n", COLOR_RESET, unexpected, COLOR_RED);
+		printf("%sActual:%s\n%s\n", COLOR_RESET, actual, COLOR_GREEN);
+		return 0;
+	}
+}

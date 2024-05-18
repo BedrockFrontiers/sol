@@ -39,6 +39,14 @@ typedef struct Token {
 int is_operator(char c);
 
 /**
+ * @brief Converte um enum `TokenType` para uma string representando o tipo de token.
+ * 
+ * @param type O tipo de token a ser convertido.
+ * @return Um ponteiro para a string representando o tipo de token.
+ */
+const char* token_type_to_string(TokenType type);
+
+/**
  * @brief Frees memory allocated for a single token.
  * 
  * @param token The token to be freed.
@@ -82,6 +90,4 @@ Token* add_token(Token* head, Token* new_token);
  */
 Token* create_token(const int cur_index, const int start, const int cur_line, const int cur_column, const char* source, TokenType kind);
 
-
-const char* token_type_to_string(TokenType type);
 #endif
