@@ -6,7 +6,7 @@
   ### The Sol Programming Language
   
   [![License: Apache License 2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
-  [![Development Status: From Beginning](https://img.shields.io/badge/development%20status-From%20Beginning-red?style=flat-square)](https://github.com/orgs/BedrockFrontiers/projects/1) \
+  [![Development Status](https://img.shields.io/badge/development%20status-Initial%20Stage-red?style=flat-square)](https://github.com/orgs/BedrockFrontiers/projects/1) \
   [![Stars](https://img.shields.io/github/stars/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/stargazers)
   [![Code Size](https://img.shields.io/github/languages/code-size/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/sol)
   [![Contributors](https://img.shields.io/github/contributors/BedrockFrontiers/sol?style=flat-square)](https://github.com/BedrockFrontiers/sol/graphs/contributors)

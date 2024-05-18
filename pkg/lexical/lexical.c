@@ -15,6 +15,25 @@ int is_operator(char c) {
 	return strchr(OPERATORS, c) != NULL;
 }
 
+const char* token_type_to_string(TokenType type) {
+   switch (type) {
+      case TOKEN_NUMBER:
+         return "TOKEN_NUMBER";
+      case TOKEN_IDENTIFIER:
+         return "TOKEN_IDENTIFIER";
+      case TOKEN_SYMBOL:
+         return "TOKEN_SYMBOL";
+      case TOKEN_OPERATOR:
+         return "TOKEN_OPERATOR";
+      case TOKEN_BOOLEAN:
+         return "TOKEN_BOOLEAN";
+      case TOKEN_STRING:
+         return "TOKEN_STRING";
+      case TOKEN_EOF:
+         return "TOKEN_EOF";
+   }
+}
+
 Token* create_token(const int cur_index, const int start, const int cur_line, const int cur_column, const char* source, TokenType kind) {
 	Token* token = (Token*)malloc(sizeof(Token));
 	if (token == NULL) {
