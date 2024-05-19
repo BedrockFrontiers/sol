@@ -85,7 +85,7 @@ cd path/to/your/sol/project
 > * **Interpret Test Results**: Observe the test output to determine if the tests passed or failed. Any error messages or unexpected behavior indicate test failures.
 
 > [!IMPORTANT]\
-> Please refrain from executing the compiled .exe file directly from your terminal. Doing so may lead to inaccurate test results due to dependencies on text files and directory structures.
+> Please refrain from executing the compiled file directly from your terminal. Doing so may lead to inaccurate test results due to dependencies on text files and directory structures.
 
 ## Contributing
 
