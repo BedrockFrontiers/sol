@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright © 2024 Bedrock Frontiers. All rights reserved.
 # This script is subject to the terms and conditions of the Apache License, Version 2.0.

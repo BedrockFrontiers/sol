@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copyright © 2024 Bedrock Frontiers. All rights reserved.
 # This script is subject to the terms and conditions of the Apache License, Version 2.0.
@@ -50,13 +50,22 @@ compile_sources() {
       includes_folders+=" -I$dir"
    done
 
+   # If the operating system type indicates Windows ('msys' or 'win32'),
+   # set the file extension to '.exe' to ensure compatibility across Windows,
+   # macOS, Linux, and other platforms.
+   if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+      ext=".exe"
+   else
+      ext=""
+   fi
+
    # Compile the test file along with all source files
-   gcc $TEST_DIR/$test_file $src_files -o $BIN_DIR/${test_file%.c}.exe $includes_folders -no-pie
+   gcc $TEST_DIR/$test_file $src_files -o $BIN_DIR/${test_file%.c}$ext $includes_folders -no-pie
 
    # Check if compilation was successful
    if [ $? -eq 0 ]; then
       # Display the path to the compiled executable
-      echo "Compilation done! Executable path: $BIN_DIR/${test_file%.c}.exe"
+      echo "Compilation done! Executable path: $BIN_DIR/${test_file%.c}$ext"
    else
       echo "Error: Compilation failed."
       read -p "Press Enter to continue..." pause

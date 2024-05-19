@@ -40,14 +40,23 @@ compile_sources() {
       includes_folders+=" -I$dir"
    done
 
+   # If the operating system type indicates Windows ('msys' or 'win32'),
+   # set the file extension to '.exe' to ensure compatibility across Windows,
+   # macOS, Linux, and other platforms.
+   if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+      ext=".exe"
+   else
+      ext=""
+   fi
+
    # Compile all test files along with all source files
    for test_file in $TEST_DIR/*.c; do
-      gcc $test_file $src_files -o $BIN_DIR/$(basename ${test_file%.c}.exe) $includes_folders -no-pie
+      gcc $test_file $src_files -o $BIN_DIR/$(basename ${test_file%.c}$ext) $includes_folders -no-pie
 
       # Check if compilation was successful
       if [ $? -eq 0 ]; then
          # Display the path to the compiled executable
-         echo "Compilation done! Executable path: $BIN_DIR/$(basename ${test_file%.c}.exe)"
+         echo "Compilation done! Executable path: $BIN_DIR/$(basename ${test_file%.c}$ext)"
       else
          echo "Error: Compilation failed for $test_file."
          read -p "Press Enter to continue..." pause
