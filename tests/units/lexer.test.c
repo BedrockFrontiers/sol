@@ -34,12 +34,12 @@ int main() {
 
    int testsPassed = 0;
    describe("Testing file.");
-   testsPassed += expectTrue("The file should be runned from it's original path \"\\tests\\units\\bin\"", verify_execution_directory("\\tests\\units\\bin"));
+   testsPassed += expectTrue("The file should be runned from it's original path \"/tests/units/bin\"", verify_execution_directory("/tests/units/bin"));
    
    describe("Reading file");
    char* file_content;
 
-   file_content = read_file("..\\code.solg");
+   file_content = read_file("../code.solg");
    testsPassed += expectNotString("The file content should be able to be opened ", "$<ERROR.FAILED_TO_OPEN_FILE>$", file_content);
    testsPassed += expectNotString("The file content should not be NULL", "$<ERROR.NULL_FILE_CONTENT>$", file_content);
    
