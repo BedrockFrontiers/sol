@@ -16,6 +16,7 @@
 #include "read_file.h"
 #include "directory_check.h"
 #include "test_functions.h"
+#include "ansi_support.h"
 
 /**
  * @brief Main function to test the lexical analyzer.
@@ -27,9 +28,13 @@
  * @return 0 on success, non-zero on failure.
  */
 int main() {
+   #ifdef _WIN32
+   enable_ansi_support();
+   #endif
+
    int testsPassed = 0;
    describe("Testing file.");
-   testsPassed += expectTrue("The file should be runned from it's original path \\tests\\units\\bin", verify_execution_directory("\\tests\\units\\bin"));
+   testsPassed += expectTrue("The file should be runned from it's original path \"\\tests\\units\\bin\"", verify_execution_directory("\\tests\\units\\bin"));
    
    describe("Reading file");
    char* file_content;
@@ -44,7 +49,7 @@ int main() {
 
    Token* current = tokens;
    while (current) {
-      printf("Token Value: %s | Token Type: %s | (Line: %d, Column: %d)\n", current->lexeme, token_type_to_string(current->kind), current->line, current->column);
+      printf("Value: %s | Kind: %s | (Line: %d, Column: %d)\n", current->lexeme, token_type_to_string(current->kind), current->line, current->column);
       current = current->next;
    }
 
