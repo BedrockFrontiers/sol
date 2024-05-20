@@ -12,9 +12,9 @@ void describe(const char *description) {
 
 void finalizeTests(int testsPassed, int totalTests) {
 	if (testsPassed < totalTests)
-		printf("\n%s[TEST RESULTS]: %sPASSED %d of %d tests%s\n", COLOR_RED, COLOR_RESET, testsPassed, totalTests, COLOR_RESET);
+		printf("\n%s[TEST RESULTS]: %sPASSED %d of %d tests\n", COLOR_RED, COLOR_RESET, testsPassed, totalTests);
 	else
-		printf("\n[TEST RESULTS]: PASSED %d of %d tests\n", testsPassed, totalTests);
+		printf("\n%s[TEST RESULTS]: %sPASSED %d of %d tests\n", COLOR_GREEN, COLOR_RESET, testsPassed, totalTests);
 }
 
 int expectTrue(const char *description, int condition) {
